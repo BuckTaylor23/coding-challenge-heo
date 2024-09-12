@@ -18,7 +18,7 @@ vehicle_rows.each do |row|
   invalid_area_array << row unless VALID_AREAS.include?(row[4])
   next row unless VALID_AREAS.include?(row[4])
 
-  vrn = vrn_generator(input: row)
+  vrn = vrn_generator(vehicle_data: row)
   row << vrn
   generated_registrations << row
   swansea_array << row if row[4].upcase == 'SWANSEA'

@@ -43,8 +43,8 @@ def rand_valid_chars
   chars.sample(3).join
 end
 
-def vrn_generator(input:)
-  area_code = area_code_generator(area: input.last)
-  age_id = age_identifier(date: input[2])
+def vrn_generator(vehicle_data:)
+  area_code = area_code_generator(area: vehicle_data.last)
+  age_id = age_identifier(date: vehicle_data[2])
   area_code << age_id << rand_valid_chars
 end
