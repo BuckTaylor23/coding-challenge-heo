@@ -14,20 +14,22 @@ cardiff_array = []
 birmingham_array = []
 
 vehicle_rows.each do |row|
-  row << 'vehicleRegistrationNumber' if row.include? 'make'
+  row << 'vehicleRegistrationNumber' if row.first == 'make'
   invalid_area_array << row unless VALID_AREAS.include?(row[4])
   next row unless VALID_AREAS.include?(row[4])
 
-  vrn = vrn_generator(row: row)
+  vrn = vrn_generator(input: row)
   row << vrn
   generated_registrations << row
-  swansea_array << row if row.include? 'swansea'
-  cardiff_array << row if row.include? 'cardiff'
-  birmingham_array << row if row.include? 'birmingham'
+  swansea_array << row if row[4].upcase == 'SWANSEA'
+  cardiff_array << row if row[4].upcase == 'CARDIFF'
+  birmingham_array << row if row[4].upcase == 'BIRMINGHAM'
 end
 
 CSV.open('./new.csv', 'w') do |csv|
-  vehicle_rows.each { |row| csv << row unless row.include? 'london' }
+  vehicle_rows.each do |row|
+    csv << row if VALID_AREAS.include?(row[4]) || row.first == 'make'
+  end
 end
 
 puts "Number of vehicles from unrecognised areas skipped: #{invalid_area_array.count}"
