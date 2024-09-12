@@ -29,7 +29,9 @@ vehicle_rows.each do |row|
 end
 
 CSV.open('./new.csv', 'w') do |csv|
-  vehicle_rows.each { |row| csv << row }
+  vehicle_rows.each do |row|
+    csv << row unless row.include? 'london'
+  end
 end
 
 
