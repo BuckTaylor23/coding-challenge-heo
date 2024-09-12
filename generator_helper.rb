@@ -18,20 +18,24 @@ def area_code_generator(area:)
   end
 end
 
-def age_identifier(date:)
-  reg_date = Date.parse(date)
-  year_of_reg = reg_date.year.digits.reverse
-  decade_year = year_of_reg.last(2).join.to_i
+def reg_date_calculator(years:, reg_date:)
   if reg_date.month.between?(1, 2)
-    age_id = decade_year + 49
+    age_id = years + 49
   elsif reg_date.month.between?(3, 8)
-    age_id = decade_year
+    age_id = years
   elsif reg_date.month.between?(9, 12)
-    age_id = decade_year + 50
+    age_id = years + 50
   else
     raise "Invalid month: #{reg_date.month}"
   end
   "#{age_id} "
+end
+
+def age_identifier(date:)
+  reg_date = Date.parse(date)
+  year_of_reg = reg_date.year.digits.reverse
+  decade_year = year_of_reg.last(2).join.to_i
+  reg_date_calculator(years: decade_year, reg_date: reg_date)
 end
 
 def rand_valid_chars
